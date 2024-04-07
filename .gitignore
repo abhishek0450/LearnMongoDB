@@ -1,0 +1,25 @@
+# Dependency directories
+/node_modules
+
+# Environment variables file
+.env
+
+# Editor-specific files
+.vscode/
+.idea/
+
+# Log files
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore npm debug log
+npm-debug.log*
+
+# Ignore yarn errors log
+yarn-error.log
+
+# Ignore package-lock.json
+package-lock.json
