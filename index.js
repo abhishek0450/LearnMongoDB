@@ -1,8 +1,8 @@
 const express = require('express')
 const db = require('./db')
 require('dotenv').config();
-// const passport = require('passport');
-// const LocalStrategy = require('passport-local').Strategy;//strategy for authenticating with a username and password
+const passport = require('passport');
+const LocalStrategy = require('passport-local').Strategy;//strategy for authenticating with a username and password
 
 
 
@@ -26,24 +26,23 @@ app.get('/',(req, res) => {
 
 
 
-// passport.use(new LocalStrategy(async (username, password, done) => {
-//     try {
-//         // console.log('Received credentials:', username, password);
-//         const user = await Person.findOne({ username });
-//         if (!user)
-//             return done(null, false, { message: 'Incorrect username.' });
+passport.use(new LocalStrategy(async (username, password, done) => {
+    try {
+console.log('Received credentials:', username, password);
+ const user = await Person.findOne({ username:username }); if (!user)
+ return done(null, false, { message: 'Incorrect username.' });
         
-//         const isPasswordMatch = await user.comparePassword(password);
-//         if (isPasswordMatch)
-//             return done(null, user);
-//         else
-//             return done(null, false, { message: 'Incorrect password.' })
-//     } catch (error) {
-//         return done(error);
-//     }
-// }));
+        const isPasswordMatch = await user.password===password ? true:false;
+        if (isPasswordMatch)
+            return done(null, user);
+        else
+            return done(null, false, { message: 'Incorrect password.' })
+    } catch (error) {
+        return done(error);
+    }
+}));
 
-// app.use(passport.initialize());
+app.use(passport.initialize());
 
 
 
@@ -56,7 +55,7 @@ app.use('/person', personRoutes);
 app.use('/order', MenuRoutes);
 
 
-
+//h
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
