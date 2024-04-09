@@ -1,8 +1,8 @@
 const express = require('express')
 const db = require('./db')
 require('dotenv').config();
-const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;//strategy for authenticating with a username and password
+// const passport = require('passport');
+// const LocalStrategy = require('passport-local').Strategy;//strategy for authenticating with a username and password
 
 
 
@@ -17,33 +17,33 @@ const logRequest = (req, res, next) => {
 }
 app.use(logRequest);
 
-const localAuthMiddleware = passport.authenticate('local', {session: false});
+// const localAuthMiddleware = passport.authenticate('local', {session: false});
 
 //pizza shop backend
-app.get('/', localAuthMiddleware ,(req, res) => {
+app.get('/',(req, res) => {
   res.send('Welcome to the Pizza Shop!')
 })
 
 
 
-passport.use(new LocalStrategy(async (username, password, done) => {
-    try {
-        // console.log('Received credentials:', username, password);
-        const user = await Person.findOne({ username });
-        if (!user)
-            return done(null, false, { message: 'Incorrect username.' });
+// passport.use(new LocalStrategy(async (username, password, done) => {
+//     try {
+//         // console.log('Received credentials:', username, password);
+//         const user = await Person.findOne({ username });
+//         if (!user)
+//             return done(null, false, { message: 'Incorrect username.' });
         
-        const isPasswordMatch = await user.comparePassword(password);
-        if (isPasswordMatch)
-            return done(null, user);
-        else
-            return done(null, false, { message: 'Incorrect password.' })
-    } catch (error) {
-        return done(error);
-    }
-}));
+//         const isPasswordMatch = await user.comparePassword(password);
+//         if (isPasswordMatch)
+//             return done(null, user);
+//         else
+//             return done(null, false, { message: 'Incorrect password.' })
+//     } catch (error) {
+//         return done(error);
+//     }
+// }));
 
-app.use(passport.initialize());
+// app.use(passport.initialize());
 
 
 
